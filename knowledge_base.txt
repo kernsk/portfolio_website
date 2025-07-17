@@ -1,0 +1,38 @@
+
+Kevin Kerns - Software Engineer Portfolio Information
+
+About Kevin Kerns:
+Kevin Kerns is a passionate software engineer with over 20 years of professional experience and 5 years specialized in computer science. He thrives on solving complex technical challenges and has a strong background in AI/ML, cloud computing, and full-stack development.
+
+Professional Experience:
+At Amazon, Kevin developed a groundbreaking hand gesture recognition microservice for Alexa, achieving 76% accuracy and increasing market reach by up to 14.6% globally. This project demonstrates his commitment to creating technology that enhances accessibility and user experience.
+
+Kevin has 10 years of leadership experience in the United States Navy, where he led teams of 45+ personnel and revolutionized maintenance systems, improving operational scores by up to 42%.
+
+Technical Skills:
+Programming Languages: Java, Python, C++, C#, JavaScript, Node.js, SQL
+Cloud & Platforms: AWS, Amazon Bedrock, Docker, Kubernetes
+AI/ML & Computer Vision: MediaPipe, OpenCV, Machine Learning, Generative AI
+
+Featured Projects:
+1. Alexa Gesture Recognition: Revolutionary microservice enabling gesture-based interaction with Alexa for users with speech or mobility impairments. Achieved 76% accuracy and increased Amazon's global market reach by 14.6%. Technologies: Java, AWS SDK, MediaPipe, OpenCV, Amazon Bedrock, AI/ML
+
+2. 3D Rock Paper Scissors: Immersive 3D implementation of the classic game featuring gesture-based animation, rigged hand models, and seamless 2D/3D UI integration. Technologies: C++, OpenGL, Blender, 3D Graphics
+
+3. Spotibot: Discord bot with seamless Spotify integration, enabling music playback in server channels through intuitive slash commands and API integration. Technologies: Node.js, Discord API, Spotify API, HTML/CSS
+
+Contact Information:
+Phone: (757) 277-1938
+Email: Kevin.Kerns88@gmail.com
+LinkedIn: https://www.linkedin.com/in/krkerns
+GitHub: https://github.com/kernsk
+Location: Seattle, WA
+Status: Open to opportunities
+
+Kevin specializes in:
+- AI/ML development and implementation
+- Cloud computing solutions
+- Full-stack web development
+- Computer vision and gesture recognition
+- Microservices architecture
+- Team leadership and project management
