@@ -31,38 +31,125 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Navbar background change on scroll
+// Navbar background change and auto-hide on scroll
+let lastScrollY = window.scrollY;
+
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
+    const currentScrollY = window.scrollY;
+    
+    // Background change based on scroll position
+    if (currentScrollY > 100) {
         navbar.style.background = 'rgba(10, 10, 10, 0.98)';
         navbar.style.backdropFilter = 'blur(15px)';
     } else {
         navbar.style.background = 'rgba(10, 10, 10, 0.95)';
         navbar.style.backdropFilter = 'blur(10px)';
     }
+    
+    // Auto-hide navbar based on scroll direction
+    if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down - hide navbar
+        navbar.classList.add('nav-hidden');
+    } else if (currentScrollY < lastScrollY) {
+        // Scrolling up - show navbar
+        navbar.classList.remove('nav-hidden');
+    }
+    
+    lastScrollY = currentScrollY;
 });
 
-// Intersection Observer for fade-in animations
+// Bidirectional Intersection Observer for scroll animations
 const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: 0.2,
+    rootMargin: '0px 0px -10% 0px'
 };
 
-const observer = new IntersectionObserver((entries) => {
+const bidirectionalObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
+            // Element is entering viewport - show it
             entry.target.classList.add('visible');
+            entry.target.classList.remove('exit');
+        } else {
+            // Element is leaving viewport - hide it in opposite direction
+            entry.target.classList.remove('visible');
+            entry.target.classList.add('exit');
         }
     });
 }, observerOptions);
 
-// Add fade-in class to elements and observe them
+// Initialize bidirectional animations
 document.addEventListener('DOMContentLoaded', () => {
-    const fadeElements = document.querySelectorAll('.section-title, .project-card, .contact-method, .about-text, .about-skills');
-    fadeElements.forEach(el => {
-        el.classList.add('fade-in');
-        observer.observe(el);
+    // ALL ELEMENTS USE SCALE-IN ANIMATION - NO EXCEPTIONS
+    
+    // Hero section elements
+    const heroElements = document.querySelectorAll('.hero-title, .hero-subtitle, .hero-description, .hero-stats, .hero-buttons, .hero-visual');
+    heroElements.forEach(element => {
+        element.classList.add('scale-in');
+        bidirectionalObserver.observe(element);
+    });
+    
+    // Section titles
+    const sectionTitles = document.querySelectorAll('.section-title');
+    sectionTitles.forEach(title => {
+        title.classList.add('scale-in');
+        bidirectionalObserver.observe(title);
+    });
+    
+    // About section elements
+    const aboutText = document.querySelector('.about-text');
+    const aboutSkills = document.querySelector('.about-skills');
+    
+    if (aboutText) {
+        aboutText.classList.add('scale-in');
+        bidirectionalObserver.observe(aboutText);
+    }
+    
+    if (aboutSkills) {
+        aboutSkills.classList.add('scale-in');
+        bidirectionalObserver.observe(aboutSkills);
+    }
+    
+    // Project cards
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+        card.classList.add('scale-in');
+        bidirectionalObserver.observe(card);
+    });
+    
+    // Main sections
+    const mainSections = document.querySelectorAll('.about.scale-in, .projects.scale-in, .contact.scale-in, .footer.scale-in');
+    mainSections.forEach(section => {
+        bidirectionalObserver.observe(section);
+    });
+    
+    // Contact methods
+    const contactMethods = document.querySelectorAll('.contact-method');
+    contactMethods.forEach(method => {
+        method.classList.add('scale-in');
+        bidirectionalObserver.observe(method);
+    });
+    
+    // Terminal
+    const terminal = document.querySelector('.terminal');
+    if (terminal) {
+        terminal.classList.add('scale-in');
+        bidirectionalObserver.observe(terminal);
+    }
+    
+    // Contact intro text
+    const contactIntro = document.querySelector('.contact-intro');
+    if (contactIntro) {
+        contactIntro.classList.add('scale-in');
+        bidirectionalObserver.observe(contactIntro);
+    }
+    
+    // Skill categories
+    const skillCategories = document.querySelectorAll('.skill-category');
+    skillCategories.forEach(category => {
+        category.classList.add('scale-in');
+        bidirectionalObserver.observe(category);
     });
 });
 
@@ -88,17 +175,6 @@ window.addEventListener('load', () => {
     if (subtitle) {
         const originalText = subtitle.textContent;
         typeWriter(subtitle, originalText, 150);
-    }
-});
-
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    const heroContent = document.querySelector('.hero-content');
-    
-    if (hero && heroContent) {
-        heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
     }
 });
 
