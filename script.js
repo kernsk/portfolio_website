@@ -57,7 +57,76 @@ window.addEventListener('scroll', () => {
     }
     
     lastScrollY = currentScrollY;
+    
+    // Update navigation indicator
+    updateNavIndicator();
 });
+
+// Navigation indicator functionality
+function updateNavIndicator() {
+    const navbar = document.querySelector('.navbar');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section');
+    
+    // Don't show indicator if navbar is hidden
+    if (navbar.classList.contains('nav-hidden')) {
+        navMenu.classList.remove('show-indicator');
+        // Remove active class from all nav links when navbar is hidden
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+        });
+        return;
+    }
+    
+    let currentSection = '';
+    const scrollPosition = window.scrollY + 150; // Offset for better detection
+    
+    // Find current section
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            currentSection = section.id;
+        }
+    });
+    
+    // Hide indicator when in hero section
+    if (currentSection === 'hero' || currentSection === '') {
+        navMenu.classList.remove('show-indicator');
+        // Remove active class from all nav links
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+        });
+        return;
+    }
+    
+    // Show indicator and position it
+    navMenu.classList.add('show-indicator');
+    
+    // Find the active nav link and position the indicator
+    navLinks.forEach((link, index) => {
+        const href = link.getAttribute('href').substring(1); // Remove #
+        if (href === currentSection) {
+            const linkRect = link.getBoundingClientRect();
+            const menuRect = navMenu.getBoundingClientRect();
+            const relativeLeft = linkRect.left - menuRect.left;
+            const linkWidth = linkRect.width;
+            
+            // Position the indicator
+            const indicator = navMenu.querySelector('::after');
+            navMenu.style.setProperty('--indicator-left', `${relativeLeft}px`);
+            navMenu.style.setProperty('--indicator-width', `${linkWidth}px`);
+            
+            // Add active class to current link
+            link.classList.add('active');
+        } else {
+            // Remove active class from non-current links
+            link.classList.remove('active');
+        }
+    });
+}
 
 // Bidirectional Intersection Observer for scroll animations
 const observerOptions = {
@@ -151,6 +220,9 @@ document.addEventListener('DOMContentLoaded', () => {
         category.classList.add('scale-in');
         bidirectionalObserver.observe(category);
     });
+    
+    // Initialize navigation indicator
+    updateNavIndicator();
 });
 
 // Typing animation for hero subtitle
