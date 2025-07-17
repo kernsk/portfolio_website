@@ -118,8 +118,14 @@ body {
     margin: 0 auto;
     padding: 1rem 2rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    position: relative;
+}
+
+.nav-logo {
+    position: absolute;
+    left: 2rem;
 }
 
 .nav-logo .logo-text {
