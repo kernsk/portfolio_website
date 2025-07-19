@@ -8,6 +8,7 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.document_loaders import TextLoader
 from langchain.schema import Document
 import google.generativeai as genai
+from google.generativeai import types
 from sentence_transformers import SentenceTransformer
 import numpy as np
 import logging
@@ -42,28 +43,19 @@ class GeminiRAGChatbot:
             
             genai.configure(api_key=api_key)
             
-            # Configure safety settings to disable all content filtering
-            safety_settings = [
-                {
-                    "category": "HARM_CATEGORY_HARASSMENT",
-                    "threshold": "BLOCK_NONE"
-                },
-                {
-                    "category": "HARM_CATEGORY_HATE_SPEECH",
-                    "threshold": "BLOCK_NONE"
-                },
-                {
-                    "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                    "threshold": "BLOCK_NONE"
-                },
-                {
-                    "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-                    "threshold": "BLOCK_NONE"
-                }
+             # Configure safety settings to disable all content filtering
+            self.safety_settings = [
+                { "category": types.HarmCategory.HARM_CATEGORY_HARASSMENT,
+                "threshold": types.HarmBlockThreshold.BLOCK_NONE },
+                { "category": types.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                "threshold": types.HarmBlockThreshold.BLOCK_NONE },
+                { "category": types.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                "threshold": types.HarmBlockThreshold.BLOCK_NONE },
+                { "category": types.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                "threshold": types.HarmBlockThreshold.BLOCK_NONE }
             ]
-            
-            self.model = genai.GenerativeModel('gemini-2.5-flash-lite', safety_settings=safety_settings)
-            logger.info("Gemini API initialized successfully with model: gemini-2.5-flash-lite (safety filters disabled)")
+            self.model = genai.GenerativeModel('gemini-2.0-flash-lite', safety_settings=self.safety_settings)
+            logger.info("Gemini API initialized successfully with model: gemini-2.0-flash-lite (safety filters disabled)")
 
         except Exception as e:
             logger.error(f"Error setting up Gemini API: {str(e)}")
@@ -216,7 +208,9 @@ Based on the following professional information, please provide a helpful respon
 
 User question: {question}
 
-Please provide a professional and informative response about Kevin Kerns' background, skills, or experience.
+You are Kevin's biographer and a professional writer.Please provide a professional and informative response about Kevin Kerns' background, skills, or experience.
+Make it organized, with bullets where appropriate, and bold words to show emphasis when appropriate.
+Break up long paragraphs into smaller ones to improve readability. Dive right into the answer without telling the user what you're about to give them. Just give them the answer.
 """
             
             logger.info("Sending request to Gemini...")
