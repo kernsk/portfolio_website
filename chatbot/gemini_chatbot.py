@@ -62,9 +62,9 @@ class GeminiRAGChatbot:
                 }
             ]
             
-            self.model = genai.GenerativeModel('gemini-2.0-flash-lite', safety_settings=safety_settings)
-            logger.info("Gemini API initialized successfully with model: gemini-2.0-flash-lite (safety filters disabled)")
-            
+            self.model = genai.GenerativeModel('gemini-2.5-flash-lite', safety_settings=safety_settings)
+            logger.info("Gemini API initialized successfully with model: gemini-2.5-flash-lite (safety filters disabled)")
+
         except Exception as e:
             logger.error(f"Error setting up Gemini API: {str(e)}")
             self.model = None
@@ -120,7 +120,7 @@ class GeminiRAGChatbot:
             return [Document(page_content="I'm Kevin Kerns' portfolio assistant. I can help you learn about Kevin's experience, skills, and projects.", metadata={})]
     
     def create_default_knowledge_base(self, filename):
-        """Create default knowledge base about Kevin Kerns"""
+        """Create default knowledge base"""
         knowledge_content = """
 Kevin Kerns - Software Engineer Portfolio Information
 
