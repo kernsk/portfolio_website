@@ -1,6 +1,7 @@
 /.vscode
 /Kevin_Kerns_Resume.txt
 /knowledge_base.txt
+knowledge_base.txt
 
 # Environment variables
 .env
