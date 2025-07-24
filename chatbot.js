@@ -5,6 +5,32 @@ class PortfolioChatbot {
         this.init();
     }
 
+    // Simple markdown parser for basic formatting
+    parseMarkdown(text) {
+        let processedText = text;
+        
+        // Process bold text first (**text** and __text__)
+        processedText = processedText
+            .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+            .replace(/__([^_]+)__/g, '<strong>$1</strong>');
+        
+        // Handle bullet points - be very specific about format
+        processedText = processedText
+            .replace(/^[ \t]*\*[ \t]+(.+)$/gm, '<li>$1</li>')
+            .replace(/^[ \t]*-[ \t]+(.+)$/gm, '<li>$1</li>')
+            .replace(/^[ \t]*•[ \t]+(.+)$/gm, '<li>$1</li>')
+            .replace(/^[ \t]*\d+\.[ \t]+(.+)$/gm, '<li>$1</li>');
+        
+        // Wrap list items in ul tags
+        processedText = processedText.replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>');
+        processedText = processedText.replace(/<\/ul>\s*<ul>/g, '');
+        
+        // Handle line breaks
+        processedText = processedText.replace(/\n/g, '<br>');
+        
+        return processedText;
+    }
+
     init() {
         this.createChatbotElements();
         this.setupEventListeners();
@@ -51,14 +77,6 @@ class PortfolioChatbot {
                 <button id="chatbot-send">
                     <i class="fas fa-paper-plane"></i>
                 </button>
-            </div>
-            <div class="chatbot-typing" id="chatbot-typing" style="display: none;">
-                <div class="typing-indicator">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <span>AI is thinking...</span>
             </div>
         `;
 
@@ -181,12 +199,13 @@ class PortfolioChatbot {
                 </div>
             `;
         } else {
+            const parsedContent = this.parseMarkdown(content);
             messageDiv.innerHTML = `
                 <div class="message-avatar">
                     <i class="fas fa-robot"></i>
                 </div>
                 <div class="message-content">
-                    <p>${content}</p>
+                    <div>${parsedContent}</div>
                 </div>
             `;
         }
@@ -196,16 +215,39 @@ class PortfolioChatbot {
     }
 
     showTyping() {
-        const typing = document.getElementById('chatbot-typing');
-        typing.style.display = 'flex';
+        // Remove any existing typing indicator first
+        this.hideTyping();
         
         const messagesContainer = document.getElementById('chatbot-messages');
+        
+        // Create typing indicator element
+        const typingDiv = document.createElement('div');
+        typingDiv.id = 'chatbot-typing';
+        typingDiv.className = 'chatbot-typing';
+        typingDiv.innerHTML = `
+            <div class="message-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="message-content">
+                <div class="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <span class="typing-text">AI is thinking...</span>
+            </div>
+        `;
+        
+        // Add to messages container
+        messagesContainer.appendChild(typingDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
     hideTyping() {
         const typing = document.getElementById('chatbot-typing');
-        typing.style.display = 'none';
+        if (typing) {
+            typing.remove();
+        }
     }
 }
 

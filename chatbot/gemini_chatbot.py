@@ -30,6 +30,16 @@ class GeminiRAGChatbot:
         self.embeddings = None
         self.documents = []
         self.response_cache = {}  # Simple cache for responses
+        self.safety_settings = [
+            { "category": types.HarmCategory.HARM_CATEGORY_HARASSMENT,
+            "threshold": types.HarmBlockThreshold.BLOCK_NONE },
+            { "category": types.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+            "threshold": types.HarmBlockThreshold.BLOCK_NONE },
+            { "category": types.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+            "threshold": types.HarmBlockThreshold.BLOCK_NONE },
+            { "category": types.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+            "threshold": types.HarmBlockThreshold.BLOCK_NONE }
+        ]
         self.setup_gemini()
         self.setup_rag_system()
     
@@ -42,20 +52,9 @@ class GeminiRAGChatbot:
                 return
             
             genai.configure(api_key=api_key)
-            
-             # Configure safety settings to disable all content filtering
-            self.safety_settings = [
-                { "category": types.HarmCategory.HARM_CATEGORY_HARASSMENT,
-                "threshold": types.HarmBlockThreshold.BLOCK_NONE },
-                { "category": types.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-                "threshold": types.HarmBlockThreshold.BLOCK_NONE },
-                { "category": types.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-                "threshold": types.HarmBlockThreshold.BLOCK_NONE },
-                { "category": types.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-                "threshold": types.HarmBlockThreshold.BLOCK_NONE }
-            ]
-            self.model = genai.GenerativeModel('gemini-2.0-flash-lite', safety_settings=self.safety_settings)
-            logger.info("Gemini API initialized successfully with model: gemini-2.0-flash-lite (safety filters disabled)")
+
+            self.model = genai.GenerativeModel('gemini-2.5-flash-lite', safety_settings=self.safety_settings)
+            logger.info("Gemini API initialized successfully with model: gemini-2.5-flash-lite (safety filters disabled)")
 
         except Exception as e:
             logger.error(f"Error setting up Gemini API: {str(e)}")
@@ -200,17 +199,17 @@ Kevin specializes in:
                 context = context[:1500] + "..."
                 logger.info("Context truncated to 1500 characters")
             
-            # Create a more neutral prompt to avoid safety filters
+            # Create a professional prompt optimized for Navy/military experience questions
             prompt = f"""
-Based on the following professional information, please provide a helpful response:
+You are a professional career advisor helping to present Kevin Kerns' qualifications and experience. Based on the following verified professional information about Kevin:
 
 {context}
 
-User question: {question}
+Question: {question}
 
-You are Kevin's biographer and a professional writer.Please provide a professional and informative response about Kevin Kerns' background, skills, or experience.
-Make it organized, with bullets where appropriate, and bold words to show emphasis when appropriate.
-Break up long paragraphs into smaller ones to improve readability. Dive right into the answer without telling the user what you're about to give them. Just give them the answer.
+Please provide a brief response with a professional tone.
+Format your response professionally with clear organization. Use bullet points where helpful and emphasize key achievements. Provide a direct, informative answer without preamble.
+Limit your response to information directly related to the question. Limit your response to 245 tokens.
 """
             
             logger.info("Sending request to Gemini...")
@@ -219,12 +218,13 @@ Break up long paragraphs into smaller ones to improve readability. Dive right in
                 "temperature": 0.7,
                 "top_p": 0.8,
                 "top_k": 40,
-                "max_output_tokens": 200,  # Limit response length for speed
+                "max_output_tokens": 300,  # Limit response length for speed
             }
             
             response = self.model.generate_content(
                 prompt,
-                generation_config=generation_config
+                generation_config=generation_config,
+                safety_settings=self.safety_settings
             )
             
             logger.info("Received response from Gemini")
@@ -233,11 +233,13 @@ Break up long paragraphs into smaller ones to improve readability. Dive right in
             if response and response.candidates:
                 candidate = response.candidates[0]
                 logger.info(f"Response finish reason: {candidate.finish_reason}")
+                logger.info(f"Finish reason name: {candidate.finish_reason.name if hasattr(candidate.finish_reason, 'name') else 'Unknown'}")
+                logger.info(f"Question was: {question}")
                 
                 # Check if the response was blocked or had issues
                 if candidate.finish_reason == 2:  # SAFETY
-                    logger.warning("Response blocked by safety filters")
-                    return "I'm sorry, I couldn't generate a response due to safety filters. Please try rephrasing your question."
+                    logger.warning(f"Response blocked by safety filters for question: {question}")
+                    return "I'm sorry, I couldn't generate a response due to safety filters. Please try rephrasing your question about Kevin's professional experience."
                 elif candidate.finish_reason == 3:  # RECITATION
                     logger.warning("Response blocked due to recitation")
                     return "I'm sorry, I couldn't generate a response due to content policies. Please try rephrasing your question."
