@@ -68,8 +68,8 @@ class GeminiRAGChatbot:
             
             # Create text splitter with smaller chunks for faster processing
             text_splitter = RecursiveCharacterTextSplitter(
-                chunk_size=500,  # Reduced from 1000
-                chunk_overlap=100,  # Reduced from 200
+                chunk_size=1000,  # Reduced from 1000
+                chunk_overlap=200,  # Reduced from 200
                 length_function=len
             )
             
