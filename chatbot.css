@@ -341,15 +341,16 @@
 }
 
 .message-content ul {
-    margin: 0.5rem 0;
+    margin: 0.25rem 0;
     padding-left: 1rem;
 }
 
 .message-content li {
-    margin: 0.25rem 0;
+    margin: 0.1rem 0;
     color: var(--text-primary);
     list-style: none;
     position: relative;
+    line-height: 1.4;
 }
 
 .message-content li::before {
@@ -358,6 +359,15 @@
     font-weight: bold;
     position: absolute;
     left: -1rem;
+}
+
+/* Reduce spacing from line breaks */
+.message-content br {
+    line-height: 0.8;
+}
+
+.message-content div {
+    line-height: 1.5;
 }
 
 /* Mobile responsive */

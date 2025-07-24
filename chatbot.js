@@ -234,7 +234,7 @@ class PortfolioChatbot {
                     <span></span>
                     <span></span>
                 </div>
-                <span class="typing-text">AI is thinking...</span>
+                <span class="typing-text"></span>
             </div>
         `;
         
