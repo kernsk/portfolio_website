@@ -1,0 +1,70 @@
+
+Kevin Kerns - Software Engineer Portfolio Information
+
+About Kevin Kerns:
+Kevin Kerns is a passionate software engineer with over 20 years of professional work  experience and 10 years of leadership experience. He thrives on solving complex technical challenges and has a strong background in AI/ML, cloud computing, and full-stack development.
+
+Professional Experience:
+
+At Amazon:
+He developed a hand gesture recognition microservice for Alexa, achieving 76% accuracy and increasing market reach by up to 14.6% globally. This project demonstrates his commitment to creating technology that enhances accessibility and user experience.
+
+In the US Navy:
+Led and trained 45 people on how to perform maintenance on life-saving equipment, allowing the ship to deploy.
+Overhauled maintenance system, documentation, and equipment validation, boosting operational scores in several key metrics by up to 42%.
+In this role, he honed his leadership and collaboration skills — learning how to communicate complex solutions in either a technical or non-technical way — holding daily standups, assigning tasks, and planning incremental work towards goals like you would in an agile development environment.
+
+Other experience:
+Kevin has 12 years of customer-facing experience where he thrived in solving or collaborating with customers to determine how to solve their problems, and driving sales in the process. 
+
+Technical Skills:
+Programming Languages: Java, Python, C++, C#, JavaScript, Node.js, SQL
+Cloud & Platforms: AWS, Amazon Bedrock, Docker, Kubernetes
+AI/ML & Computer Vision: MediaPipe, OpenCV, Machine Learning, Generative AI
+
+Featured Projects:
+1. Alexa Gesture Recognition: microservice enabling hand gesture-based interaction with Alexa for users with speech or mobility impairments, powered by generative AI. Achieved 76% recognition accuracy and increased Amazon's global market reach by 14.6%. He worked in a team of 5 software engineers, in collaboration with cross-functional teams from Amazon's Alexa department. He refined the scope of the project to determine requirements and the minimum viable product. He wrote up the technical design documents and a project plan. He held weekly meetings with the Alexa team and other stakeholders to present progress and discuss next steps. The microservice was first implemented and tested locally on laptops before being moved to the tablet for integration and end-to-end testing.
+
+Technologies: Java, AWS SDK, MediaPipe, OpenCV, Amazon Bedrock, AI/ML
+
+What was most challenging about this project:
+The most challenging and rewarding thing about this project was working together with teams of people to generate the different ways they could go about implementing a solution to this problem, then pivoting as necessary.
+
+
+2. 3D Rock Paper Scissors: Immersive 3D implementation of the classic game featuring gesture-based animation, rigged hand models, and seamless 2D/3D UI integration. It offers best of 1, player vs computer gameplay.
+
+Technologies: C++, OpenGL, Blender with Rigify, Sprites
+
+What was most challenging about this project:
+The most challenging thing about this project was learning to rig hand models in Blender. He had become adept at sifting through documentation, but visual tools require instruction. YouTube videos offered some help, but often times they were made on outdated versions. He had to close the gap by tinkering with the software.
+
+3. Spotibot: Discord bot with seamless Spotify integration, enabling music playback in server channels through intuitive slash commands and API integration.
+
+Technologies: Node.js, Discord API, Spotify API, HTML/CSS
+
+What was most challenging about this project:
+The most challenging thing about this project was that it was his first real project. It wasn't a small assignment that was part of a course. He had to learn how to make it work by reading through an extensive amount of documentation for both spotify and discord APIs. There were no premade instructions.
+
+
+4. This Portfolio Website: He used Human-in-the-Loop Engineering to build this cyberpunk themed portfolio website and my frontend, while using his recent experience on building RAG chatbots from educative.io projects to build my backend. Learning to design my backend and practicing through this implementation provides a stepping stone towards creating agentic AI solutions. I am designed to answer any questions you have about Kevin's experience, projects, and his fit with your company, to include interview style behavioral questions. 
+
+Technologies: Python, JavaScript, HTML & CSS, Flask, Gemini, Langchain, HuggingFace
+
+What was the most challenging about this project:
+The most challenging thing about this project was learning the process of how to design and implement the backend of a chatbot. He paid for an educative.io membership to get hands-on practice doing just that with their interactive project offerings.
+
+Contact Information:
+Phone: (757) 277-1938
+Email: Kevin.Kerns88@gmail.com
+LinkedIn: https://www.linkedin.com/in/krkerns
+GitHub: https://github.com/kernsk
+Location: Seattle, WA
+Status: Open to opportunities
+
+Kevin specializes in:
+- AI/ML development and implementation
+- Cloud computing solutions
+- Full-stack web development
+- Computer vision and gesture recognition
+- Microservices architecture
+- Team leadership and project management
